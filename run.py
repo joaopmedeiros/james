@@ -6,7 +6,7 @@ from yowsup.layers.coder                       import YowCoderLayer
 from yowsup.layers.network                     import YowNetworkLayer
 from yowsup.stacks                             import YowStackBuilder
 
-from james.layer import EchoLayer
+from layer import EchoLayer
 
 #Uncomment to log
 #import logging

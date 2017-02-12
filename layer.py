@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os, subprocess, time, subprocess
 
 from yowsup.layers.interface import YowInterfaceLayer  # Reply to the message
@@ -58,7 +59,7 @@ class EchoLayer(YowInterfaceLayer):
 
     @ProtocolEntityCallback("receipt")
     def onReceipt(self, entity):
-        print(entity.ack())
+        # print(entity.ack())
         self.toLower(entity.ack())
 
     def onTextMessage(self, messageProtocolEntity):
@@ -69,7 +70,7 @@ class EchoLayer(YowInterfaceLayer):
 
         if messageProtocolEntity.getFrom(False) in ap:
             if message == 'fala puto':
-                answer = "Puto é tu " + namemitt + " "
+                answer = "Puto e tu " + namemitt + " "
                 self.toLower(textmsg(answer, to=recipient))
                 self.toLower(textmsg(answer, to=recipient))
                 print(recipient[2:12] + ":" + message)
@@ -114,17 +115,17 @@ class EchoLayer(YowInterfaceLayer):
 
             elif message == 'stop':
                 comando_final = 'python /home/joao/Development/stream2chromecast/stream2chromecast.py -stop'
-                self.toLower(textmsg("Já era", to=recipient))
+                self.toLower(textmsg("Ja era", to=recipient))
                 subprocess.Popen(comando_final, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
             elif message == 'aumenta':
                 comando_final = 'python /home/joao/Development/stream2chromecast/stream2chromecast.py -volup'
-                self.toLower(textmsg("Já era", to=recipient))
+                self.toLower(textmsg("Ja era", to=recipient))
                 subprocess.Popen(comando_final, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
             elif message == 'abaixa':
                 comando_final = 'python /home/joao/Development/stream2chromecast/stream2chromecast.py -voldown'
-                self.toLower(textmsg("Já era", to=recipient))
+                self.toLower(textmsg("Ja era", to=recipient))
                 subprocess.Popen(comando_final, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
             elif message == 'manda nudes':
@@ -137,13 +138,13 @@ class EchoLayer(YowInterfaceLayer):
                 time.sleep(1)
 
             else:
-                answer = "Deculpe " + namemitt + ", Eu ainda não entendo essa palavra"
+                answer = "Deculpe " + namemitt + ", Eu ainda nao entendo essa palavra"
                 self.toLower(textmsg(answer, to=recipient))
                 print(recipient[2:12] + ":" + message)
                 print(answer)
 
         else:
-            answer = "Oi " + namemitt + ", Desculpe, não quero ser rude, mas você não está na lista de pessoas autorizadas desse numero"
+            answer = "Oi " + namemitt + ", Desculpe, nao quero ser rude, mas voce nao esta na lista de pessoas autorizadas desse numero"
             time.sleep(5)
             self.toLower(textmsg(answer, to=recipient))
             print(recipient + ":" + message)
