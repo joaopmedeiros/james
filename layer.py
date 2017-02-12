@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# apenas adicionando um comentario para teste do controle de versao
 import os, subprocess, time, subprocess
 
 from yowsup.layers.interface import YowInterfaceLayer  # Reply to the message
@@ -11,8 +8,6 @@ from yowsup.layers.protocol_presence.protocolentities import UnavailablePresence
 from yowsup.layers.protocol_presence.protocolentities import PresenceProtocolEntity  # Name presence
 from yowsup.layers.protocol_chatstate.protocolentities import \
     OutgoingChatstateProtocolEntity  # is writing, writing pause
-from yowsup.layers.protocol_media.protocolentities import *
-from yowsup.layers.protocol_media.mediauploader import MediaUploader
 from yowsup.common.tools import Jid  # is writing, writing pause
 
 # Log, but only creates the file and writes only if you kill by hand from the console (CTRL + C)
@@ -63,24 +58,8 @@ class EchoLayer(YowInterfaceLayer):
 
     @ProtocolEntityCallback("receipt")
     def onReceipt(self, entity):
-        #  print entity.ack()
+        print(entity.ack())
         self.toLower(entity.ack())
-
-    # # invencao minha
-    #     def image_send(self, number, path, caption=None):
-    #         self.media_send(number, path, RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE)
-
-    def media_send(self, number, path, mediaType, caption=None):
-        if self.assertConnected():
-            jid = self.aliasToJid(number)
-            entity = RequestUploadIqProtocolEntity(mediaType, filePath=path)
-            successFn = lambda successEntity, originalEntity: self.onRequestUploadResult(jid, mediaType, path,
-                                                                                         successEntity, originalEntity,
-                                                                                         caption)
-            errorFn = lambda errorEntity, originalEntity: self.onRequestUploadError(jid, path, errorEntity,
-                                                                                    originalEntity)
-            self._sendIq(entity, successFn, errorFn)
-
 
     def onTextMessage(self, messageProtocolEntity):
         namemitt = messageProtocolEntity.getNotify()
@@ -89,17 +68,9 @@ class EchoLayer(YowInterfaceLayer):
         textmsg = TextMessageProtocolEntity
 
         if messageProtocolEntity.getFrom(False) in ap:
-            if message.upper() == 'FALA PUTO':
+            if message == 'fala puto':
                 answer = "Puto é tu " + namemitt + " "
                 self.toLower(textmsg(answer, to=recipient))
-                self.toLower(textmsg(answer, to=recipient))
-                print(recipient[2:12] + ":" + message)
-                print(answer)
-
-            elif message == 'temperature':
-                t = subprocess.check_output(["/opt/vc/bin/vcgencmd measure_temp | cut -c6-9"], shell=True)[:-1]
-                ts = t
-                answer = 'My temperature is ' + ts + ' °C'
                 self.toLower(textmsg(answer, to=recipient))
                 print(recipient[2:12] + ":" + message)
                 print(answer)
@@ -156,20 +127,9 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(textmsg("Já era", to=recipient))
                 subprocess.Popen(comando_final, shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
 
-            elif message == 'restart':
-                answer = "Ah! " + namemitt + ", seu bobinho, achou que eu ia cair né."
-                self.toLower(textmsg(answer, to=recipient))
-                print(recipient[2:12] + ":" + message)
-                print(answer)
-                time.sleep(1)
-                self.toLower(UnavailablePresenceProtocolEntity())
-                time.sleep(1)
-            #                os.system('reboot')
-
-            elif message.upper() == 'MANDA NUDES':
+            elif message == 'manda nudes':
                 answer = "Ok " + namemitt + ", seu safadinho. La vai."
                 self.toLower(textmsg(answer, to=recipient))
-                # image_send(recipient,"/home")
                 print(recipient[2:12] + ":" + message)
                 print(answer)
                 time.sleep(1)
@@ -184,7 +144,7 @@ class EchoLayer(YowInterfaceLayer):
 
         else:
             answer = "Oi " + namemitt + ", Desculpe, não quero ser rude, mas você não está na lista de pessoas autorizadas desse numero"
-            time.sleep(20)
+            time.sleep(5)
             self.toLower(textmsg(answer, to=recipient))
             print(recipient + ":" + message)
             print(answer)
