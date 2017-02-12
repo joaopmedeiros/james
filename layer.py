@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+# apenas adicionando um comentario para teste do controle de versao
 import os, subprocess, time, subprocess
 
 from yowsup.layers.interface import YowInterfaceLayer  # Reply to the message
